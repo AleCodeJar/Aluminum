@@ -34,7 +34,8 @@ modules:
         - microsoft.repo
       nonfree: rpmfusion
       copr:
-        - monkeygold/nautilus-open-any-terminal
+        - name: monkeygold/nautilus-open-any-terminal
+          chroot: fedora-%OS_VERSION%-x86_64
         - name: jdxcode/mise
           chroot: fedora-%OS_VERSION%-x86_64
     install:
