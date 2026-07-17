@@ -36,6 +36,7 @@ modules:
       copr:
         - monkeygold/nautilus-open-any-terminal
         - jdxcode/mise
+      chroot: fedora-%OS_VERSION%-x86_64
     install:
       packages:
         - micro
