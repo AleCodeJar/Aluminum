@@ -1,13 +1,13 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: template
+name: aluminum
 # description will be included in the image's metadata
 description: This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 42 # latest is also supported if you want new updates ASAP
+base-image: quay.io/rakuos/rakuos-gnome
+image-version: latest # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -16,15 +16,43 @@ modules:
     files:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
-
+  - type: os-release
+    properties:
+      ID: fedora
+      NAME: Aluminum
+      PRETTY_NAME: Aluminum Image
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - FiraCode
+        - JetBrainsMono
+      google-fonts:
+        - Inter
   - type: dnf
     repos:
+      files:
+        - microsoft.repo
+      nonfree: rpmfusion
       copr:
-        - atim/starship
+        - monkeygold/nautilus-open-any-terminal
+          #chroot: fedora-%OS_VERSION%-x86_64
+        - jdxcode/mise
+          #chroot: fedora-%OS_VERSION%-x86_64
     install:
       packages:
         - micro
-        - starship
+        - just
+        - zsh
+        - git
+        - curl
+        - zoxide
+        - fzf
+        - nvim
+        - gnome-tweaks
+        - steam
+        - code
+        - nautilus-open-any-terminal
+        - mise
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)
@@ -40,6 +68,25 @@ modules:
         install: # system flatpaks we want all users to have and not remove
           - org.mozilla.firefox
           - org.gnome.Loupe
+          - de.haeckerfelix.Fragments
+          - io.gitlab.adhami3310.Converter
+          - io.github.flattool.Warehouse
+          - com.discordapp.Discord
+          - com.github.tchx84.Flatseal
+          - org.telegram.desktop
+          - com.brave.Browser
+          - org.onlyoffice.desktopeditors
+          - org.localsend.localsend_app
+          - com.bitwarden.desktop
+          - com.rafaelmardojai.Blanket
+          - org.nickvision.tubeconverter
+          - com.github.johnfactotum.Foliate
+          - org.remmina.Remmina
+          - org.ferdium.Ferdium
+          - org.prismlauncher.PrismLauncher
+          - io.gitlab.news_flash.NewsFlash
+          - com.onepassword.OnePassword
+          - com.raggesilver.BlackBox
       - scope: user # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
