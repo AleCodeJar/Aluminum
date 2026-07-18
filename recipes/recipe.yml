@@ -21,6 +21,7 @@ modules:
       ID: fedora
       NAME: Aluminum
       PRETTY_NAME: Aluminum Image
+  - type: initramfs
   - type: fonts
     fonts:
       nerd-fonts:
